@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # --- 数据库 ---
+  db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: todolist
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # --- 后端 (NestJS) ---
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: todolist
+      JWT_SECRET: supersecret
+    depends_on:
+      - db
+    restart: on-failure
+
+  # --- 前端 (React) ---
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80" # 浏览器访问 http://localhost
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:3000 # 浏览器端直接访问后端
+
+volumes:
+  pgdata:
