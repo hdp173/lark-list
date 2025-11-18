@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { User } from './modules/users/entities/user.entity';
 import { Task } from './modules/tasks/entities/task.entity';
 
@@ -19,6 +20,7 @@ import { Task } from './modules/tasks/entities/task.entity';
       synchronize: true,
     }),
     UsersModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
