@@ -3,8 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { TasksModule } from './modules/tasks/tasks.module';
 import { User } from './modules/users/entities/user.entity';
 import { Task } from './modules/tasks/entities/task.entity';
+import { TaskLog } from './modules/tasks/entities/task-log.entity';
 
 @Module({
   imports: [
@@ -16,11 +18,12 @@ import { Task } from './modules/tasks/entities/task.entity';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_NAME || 'todolist',
-      entities: [User, Task],
+      entities: [User, Task, TaskLog],
       synchronize: true,
     }),
     UsersModule,
     AuthModule,
+    TasksModule,
   ],
 })
 export class AppModule {}
