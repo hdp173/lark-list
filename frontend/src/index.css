@@ -1,0 +1,31 @@
+* {
+  font-family: 'SimSun', '宋体', serif !important;
+}
+
+body {
+  font-family: 'SimSun', '宋体', serif !important;
+}
+
+/* Ant Design 组件字体覆盖 */
+.ant-select,
+.ant-input,
+.ant-btn,
+.ant-table,
+.ant-card,
+.ant-modal,
+.ant-drawer,
+.ant-form,
+.ant-menu,
+.ant-dropdown,
+.ant-picker,
+.ant-message,
+.ant-notification {
+  font-family: 'SimSun', '宋体', serif !important;
+}
+
+/* 确保所有文本都使用宋体 */
+h1, h2, h3, h4, h5, h6,
+p, span, div, a, button,
+input, textarea, select {
+  font-family: 'SimSun', '宋体', serif !important;
+}
