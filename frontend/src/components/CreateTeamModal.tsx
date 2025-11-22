@@ -27,11 +27,11 @@ const CreateTeamModal: React.FC<CreateTeamModalProps> = ({
       footer={null}
     >
       <Form form={form} onFinish={onSubmit} layout="vertical">
-        <Form.Item name="name" label="Team Name" rules={[{ required: true }]}>
-          <Input placeholder="Enter team name" />
+        <Form.Item name="name" label="团队名称" rules={[{ required: true }]}>
+          <Input placeholder="输入团队名称" />
         </Form.Item>
         <Form.Item name="description" label="Description (Optional)">
-          <TextArea rows={3} placeholder="Enter team description" />
+          <TextArea rows={3} placeholder="输入团队描述" />
         </Form.Item>
         <Form.Item name="memberIds" label="Members (Optional)">
           <Select

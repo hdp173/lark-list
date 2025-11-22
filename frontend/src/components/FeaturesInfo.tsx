@@ -11,15 +11,13 @@ const FeaturesInfo: React.FC = () => {
         border: '1px solid #d4e8ff',
       }}
     >
-      <h4 style={{ marginTop: 0, marginBottom: 12, color: '#1890ff' }}>Features</h4>
+      <h4 style={{ marginTop: 0, marginBottom: 12, color: '#1890ff' }}>功能说明</h4>
       <div style={{ fontSize: 13, lineHeight: 1.8, color: '#666' }}>
         <div style={{ marginBottom: 10 }}>
-          <strong>Notification Reminders:</strong> You will receive automatic notification
-          reminders for tasks that are nearing their due date.
+          <strong>通知提醒：</strong>系统会自动提醒即将到期的任务。
         </div>
         <div>
-          <strong>Scheduled Recurring Tasks:</strong> Tasks can be configured as recurring tasks
-          that automatically repeat on a scheduled basis (daily, weekly, monthly).
+          <strong>循环任务：</strong>可以配置任务为循环任务，自动按计划重复（每日、每周、每月）。
         </div>
       </div>
     </div>

@@ -26,15 +26,15 @@ const FiltersCard: React.FC<FiltersCardProps> = ({
       style={{ marginBottom: 16 }}
       title={
         <span>
-          <FilterOutlined /> Filters & Sorting
+          <FilterOutlined /> 筛选与排序
         </span>
       }
     >
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12} md={6}>
-          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>Creator</div>
+          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>创建者</div>
           <Select
-            placeholder="All Creators"
+            placeholder="所有创建者"
             allowClear
             style={{ width: '100%' }}
             value={filters.creatorId}
@@ -48,9 +48,9 @@ const FiltersCard: React.FC<FiltersCardProps> = ({
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6}>
-          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>Assignee</div>
+          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>执行者</div>
           <Select
-            placeholder="All Assignees"
+            placeholder="所有执行者"
             allowClear
             style={{ width: '100%' }}
             value={filters.assigneeId}
@@ -64,9 +64,9 @@ const FiltersCard: React.FC<FiltersCardProps> = ({
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6}>
-          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>Team</div>
+          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>团队</div>
           <Select
-            placeholder="All Teams"
+            placeholder="所有团队"
             allowClear
             style={{ width: '100%' }}
             value={filters.teamId}
@@ -80,41 +80,42 @@ const FiltersCard: React.FC<FiltersCardProps> = ({
           </Select>
         </Col>
         <Col xs={24} sm={12} md={6}>
-          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>Created Date Range</div>
+          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>创建日期范围</div>
           <RangePicker
             style={{ width: '100%' }}
             value={filters.createdDateRange}
             onChange={(dates) => onFilterChange('createdDateRange', dates)}
+            placeholder={['开始日期', '结束日期']}
           />
         </Col>
         <Col xs={24} sm={12} md={4}>
-          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>Sort By</div>
+          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>排序依据</div>
           <Select
             style={{ width: '100%' }}
             value={filters.sortBy}
             onChange={(value) => onFilterChange('sortBy', value)}
           >
-            <Select.Option value="createdAt">Created Time</Select.Option>
-            <Select.Option value="dueDate">Due Date</Select.Option>
-            <Select.Option value="creator">Creator</Select.Option>
-            <Select.Option value="id">Task ID</Select.Option>
+            <Select.Option value="createdAt">创建时间</Select.Option>
+            <Select.Option value="dueDate">截止日期</Select.Option>
+            <Select.Option value="creator">创建者</Select.Option>
+            <Select.Option value="id">任务ID</Select.Option>
           </Select>
         </Col>
         <Col xs={24} sm={12} md={2}>
-          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>Order</div>
+          <div style={{ marginBottom: 4, fontSize: 12, color: '#666' }}>顺序</div>
           <Select
             style={{ width: '100%' }}
             value={filters.sortOrder}
             onChange={(value) => onFilterChange('sortOrder', value)}
           >
-            <Select.Option value="ASC">ASC</Select.Option>
-            <Select.Option value="DESC">DESC</Select.Option>
+            <Select.Option value="ASC">升序</Select.Option>
+            <Select.Option value="DESC">降序</Select.Option>
           </Select>
         </Col>
       </Row>
       <div style={{ marginTop: 12 }}>
         <Button size="small" onClick={onResetFilters}>
-          Reset Filters
+          重置筛选
         </Button>
       </div>
     </Card>

@@ -110,7 +110,7 @@ const TaskDetailDrawer: React.FC<TaskDetailDrawerProps> = ({
         items={[
           {
             key: 'details',
-            label: 'Details',
+            label: '详情',
             children: (
               <>
                 <div style={{ marginTop: 15 }}>
@@ -119,7 +119,7 @@ const TaskDetailDrawer: React.FC<TaskDetailDrawerProps> = ({
                     value={localTask.description || ''}
                     onChange={handleDescriptionChange}
                     onBlur={(e) => handleDescriptionBlur(e.target.value)}
-                    placeholder="Add a description..."
+                    placeholder="添加描述..."
                     rows={4}
                     style={{
                       background: '#fafafa',
@@ -170,7 +170,7 @@ const TaskDetailDrawer: React.FC<TaskDetailDrawerProps> = ({
                     ))}
                   </div>
                   <Select
-                    placeholder="Select assignee"
+                    placeholder="选择执行者"
                     style={{ width: '100%', marginBottom: 8 }}
                     value={selectedAssigneeId}
                     onChange={(userId) => setSelectedAssigneeId(userId)}
@@ -217,7 +217,7 @@ const TaskDetailDrawer: React.FC<TaskDetailDrawerProps> = ({
                     ))}
                   </div>
                   <Select
-                    placeholder="Select follower"
+                    placeholder="选择关注者"
                     style={{ width: '100%', marginBottom: 8 }}
                     value={selectedFollowerId}
                     onChange={(userId) => setSelectedFollowerId(userId)}
@@ -265,7 +265,7 @@ const TaskDetailDrawer: React.FC<TaskDetailDrawerProps> = ({
                     ))}
                   </div>
                   <Select
-                    placeholder="Select team"
+                    placeholder="选择团队"
                     style={{ width: '100%', marginBottom: 8 }}
                     value={selectedTeamId}
                     onChange={(teamId) => setSelectedTeamId(teamId)}
@@ -310,7 +310,7 @@ const TaskDetailDrawer: React.FC<TaskDetailDrawerProps> = ({
           },
           {
             key: 'history',
-            label: 'History',
+            label: '历史',
             children: (
               <div style={{ marginTop: 15 }}>
                 <Timeline>

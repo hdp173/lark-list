@@ -145,7 +145,7 @@ const Dashboard: React.FC = () => {
       form.resetFields();
       fetchTasks();
     } catch (e) {
-      message.error('Failed to create task');
+      message.error('任务创建失败');
     }
   };
 
@@ -217,7 +217,7 @@ const Dashboard: React.FC = () => {
   const handleTitleChange = async (newTitle: string) => {
     if (!currentTask) return;
     if (newTitle.trim() === '') {
-      message.error('Title cannot be empty');
+      message.error('标题不能为空');
       return;
     }
     if (newTitle === currentTask.title) return; // No change
@@ -288,7 +288,7 @@ const Dashboard: React.FC = () => {
       teamForm.resetFields();
       fetchTeams();
     } catch (e) {
-      message.error('Failed to create team');
+      message.error('团队创建失败');
     }
   };
 

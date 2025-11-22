@@ -23,25 +23,25 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
 }) => {
   return (
     <Modal
-      title="New Task"
+      title="新建任务"
       open={visible}
       onCancel={onCancel}
       footer={null}
     >
       <Form form={form} onFinish={onSubmit} layout="vertical">
-        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-          <Input placeholder="Enter task title" />
+        <Form.Item name="title" label="标题" rules={[{ required: true }]}>
+          <Input placeholder="输入任务标题" />
         </Form.Item>
-        <Form.Item name="description" label="Description (Optional)">
-          <TextArea rows={3} placeholder="Enter task description" />
+        <Form.Item name="description" label="描述（可选）">
+          <TextArea rows={3} placeholder="输入任务描述" />
         </Form.Item>
-        <Form.Item name="dueDate" label="Due Date (Optional)">
+        <Form.Item name="dueDate" label="截止日期（可选）">
           <DatePicker style={{ width: '100%' }} showTime />
         </Form.Item>
-        <Form.Item name="assigneeIds" label="Assign To (Optional)">
+        <Form.Item name="assigneeIds" label="指派给（可选）">
           <Select
             mode="multiple"
-            placeholder="Select assignees"
+            placeholder="选择执行者"
             allowClear
             showSearch
             filterOption={(input, option) =>
@@ -57,10 +57,10 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
             ))}
           </Select>
         </Form.Item>
-        <Form.Item name="followerIds" label="Followers (Optional)">
+        <Form.Item name="followerIds" label="关注者（可选）">
           <Select
             mode="multiple"
-            placeholder="Select followers"
+            placeholder="选择关注者"
             allowClear
             showSearch
             filterOption={(input, option) =>
@@ -74,10 +74,10 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
             ))}
           </Select>
         </Form.Item>
-        <Form.Item name="teamIds" label="Teams (Optional)">
+        <Form.Item name="teamIds" label="团队（可选）">
           <Select
             mode="multiple"
-            placeholder="Select teams"
+            placeholder="选择团队"
             allowClear
             showSearch
             filterOption={(input, option) =>

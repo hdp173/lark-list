@@ -29,15 +29,15 @@ const Login: React.FC = () => {
       if (!isRegister) {
         localStorage.setItem('token', res.data.access_token);
         localStorage.setItem('username', values.username);
-        message.success('Login success');
+        message.success('登录成功');
         navigate('/dashboard');
       } else {
-        message.success('Register success, please login');
+        message.success('注册成功，请登录');
         setIsRegister(false);
         form.resetFields();
       }
     } catch (e) {
-      message.error('Auth failed');
+      message.error('认证失败');
     } finally {
       setLoading(false);
     }
@@ -62,53 +62,53 @@ const Login: React.FC = () => {
       >
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
           <Title level={2} style={{ marginBottom: 8 }}>
-            Todo List
+            任务管理系统
           </Title>
           <Text type="secondary">
-            {isRegister ? 'Create an account' : 'Sign in to your account'}
+            {isRegister ? '创建新账户' : '登录您的账户'}
           </Text>
         </div>
         <Form form={form} onFinish={handleSubmit} layout="vertical" autoComplete="off">
           <Form.Item
             name="username"
-            label="Username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            label="用户名"
+            rules={[{ required: true, message: '请输入用户名！' }]}
           >
-            <Input size="large" placeholder="Enter your username" />
+            <Input size="large" placeholder="输入用户名" />
           </Form.Item>
           <Form.Item
             name="password"
-            label="Password"
+            label="密码"
             rules={[
-              { required: true, message: 'Please input your password!' },
-              { min: 6, message: 'Password must be at least 6 characters!' },
+              { required: true, message: '请输入密码！' },
+              { min: 6, message: '密码至少6个字符！' },
             ]}
           >
-            <Input.Password size="large" placeholder="Enter your password" />
+            <Input.Password size="large" placeholder="输入密码" />
           </Form.Item>
           {isRegister && (
             <Form.Item
               name="confirmPassword"
-              label="Confirm Password"
+              label="确认密码"
               dependencies={['password']}
               rules={[
-                { required: true, message: 'Please confirm your password!' },
+                { required: true, message: '请确认密码！' },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error('The two passwords do not match!'));
+                    return Promise.reject(new Error('两次输入的密码不一致！'));
                   },
                 }),
               ]}
             >
-              <Input.Password size="large" placeholder="Confirm your password" />
+              <Input.Password size="large" placeholder="确认密码" />
             </Form.Item>
           )}
           <Form.Item>
             <Button type="primary" htmlType="submit" block size="large" loading={loading}>
-              {isRegister ? 'Sign Up' : 'Sign In'}
+              {isRegister ? '注册' : '登录'}
             </Button>
           </Form.Item>
           <div style={{ textAlign: 'center', marginTop: 16 }}>
@@ -119,7 +119,7 @@ const Login: React.FC = () => {
                 form.resetFields();
               }}
             >
-              {isRegister ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+              {isRegister ? '已有账户？立即登录' : '没有账户？立即注册'}
             </Button>
           </div>
         </Form>

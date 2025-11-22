@@ -25,7 +25,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
 }) => {
   const columns = [
     {
-      title: 'Task Name',
+      title: '任务名称',
       dataIndex: 'title',
       key: 'title',
       ellipsis: true,
@@ -36,7 +36,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
       ),
     },
     {
-      title: 'Status',
+      title: '状态',
       dataIndex: 'status',
       key: 'status',
       width: 120,
@@ -59,7 +59,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
       },
     },
     {
-      title: 'Creator',
+      title: '创建者',
       dataIndex: ['creator', 'username'],
       key: 'creator',
       width: 120,
@@ -71,7 +71,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
       ),
     },
     {
-      title: 'Assignees',
+      title: '执行者',
       dataIndex: 'assignees',
       key: 'assignees',
       width: 200,
@@ -105,7 +105,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
       },
     },
     {
-      title: 'Followers',
+      title: '关注者',
       dataIndex: 'followers',
       key: 'followers',
       width: 200,
@@ -139,7 +139,7 @@ const TaskTable: React.FC<TaskTableProps> = ({
       },
     },
     {
-      title: 'Created',
+      title: '创建时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 120,

@@ -32,10 +32,10 @@ const CreateSubtaskModal: React.FC<CreateSubtaskModalProps> = ({
     >
       <Form form={form} onFinish={onSubmit} layout="vertical">
         <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-          <Input placeholder="Enter subtask title" />
+          <Input placeholder="输入子任务标题" />
         </Form.Item>
         <Form.Item name="description" label="Description (Optional)">
-          <TextArea rows={3} placeholder="Enter subtask description" />
+          <TextArea rows={3} placeholder="输入子任务描述" />
         </Form.Item>
         <Form.Item name="dueDate" label="Due Date (Optional)">
           <DatePicker style={{ width: '100%' }} />

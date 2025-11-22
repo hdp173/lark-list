@@ -17,17 +17,17 @@ const Header: React.FC<HeaderProps> = ({ currentUser, onNewTask, onNewTeam, onLo
     <AntHeader
       style={{ display: 'flex', alignItems: 'center', background: '#fff', padding: '0 20px' }}
     >
-      <h2 style={{ margin: 0 }}>Todo List</h2>
+      <h2 style={{ margin: 0 }}>任务管理系统</h2>
       <div style={{ flex: 1 }} />
       <Button
         style={{ marginRight: 10 }}
         icon={<PlusOutlined />}
         onClick={onNewTeam}
       >
-        New Team
+        新建团队
       </Button>
       <Button type="primary" icon={<PlusOutlined />} onClick={onNewTask}>
-        New Task
+        新建任务
       </Button>
       {currentUser && (
         <span style={{ marginLeft: 16, color: '#666' }}>
@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ currentUser, onNewTask, onNewTeam, onLo
         </span>
       )}
       <Button style={{ marginLeft: 10 }} onClick={onLogout}>
-        Logout
+        退出登录
       </Button>
     </AntHeader>
   );
