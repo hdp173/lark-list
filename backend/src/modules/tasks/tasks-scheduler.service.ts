@@ -16,7 +16,7 @@ export class TasksSchedulerService {
     private notificationRepo: Repository<Notification>
   ) {}
 
-  // Check for tasks due within 24 hours every hour
+  // 每小时检查24小时内到期的任务
   @Cron(CronExpression.EVERY_HOUR)
   async checkDueTasks() {
     this.logger.log('Checking for due tasks...');
@@ -24,7 +24,7 @@ export class TasksSchedulerService {
     const now = new Date();
     const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
 
-    // Find tasks due within 24 hours that are not completed
+    // 查找24小时内到期且未完成的任务
     const dueSoonTasks = await this.taskRepo.find({
       where: {
         status: TaskStatus.TODO,
@@ -36,9 +36,9 @@ export class TasksSchedulerService {
     for (const task of dueSoonTasks) {
       const dueDate = new Date(task.dueDate);
 
-      // Check if task is due within 24 hours
+      // 检查任务是否在24小时内到期
       if (dueDate <= tomorrow) {
-        // Check if notification has already been sent
+        // 检查是否已发送通知
         const lastNotification = task.lastNotificationSent
           ? new Date(task.lastNotificationSent)
           : null;
@@ -46,18 +46,18 @@ export class TasksSchedulerService {
           ? (now.getTime() - lastNotification.getTime()) / (1000 * 60 * 60)
           : 999;
 
-        // Send notification if more than 12 hours have passed since last notification
+        // 如果距上次通知已超过12小时则发送通知
         if (hoursSinceLastNotification > 12) {
           await this.sendDueNotification(task, dueDate);
 
-          // Update last notification time
+          // 更新最后通知时间
           task.lastNotificationSent = now;
           await this.taskRepo.save(task);
         }
       }
     }
 
-    // Find overdue tasks that are not completed
+    // 查找已逾期且未完成的任务
     const overdueTasks = await this.taskRepo.find({
       where: {
         status: TaskStatus.TODO,
@@ -74,7 +74,7 @@ export class TasksSchedulerService {
         ? (now.getTime() - lastNotification.getTime()) / (1000 * 60 * 60)
         : 999;
 
-      // Send overdue reminder every 24 hours
+      // 每24小时发送一次逾期提醒
       if (hoursSinceLastNotification > 24) {
         await this.sendOverdueNotification(task);
 
@@ -88,7 +88,7 @@ export class TasksSchedulerService {
     );
   }
 
-  // Check for recurring tasks every day at 2 AM
+  // 每天凌晨2点检查循环任务
   @Cron('0 2 * * *')
   async handleRecurringTasks() {
     this.logger.log('Handling recurring tasks...');
@@ -157,7 +157,7 @@ export class TasksSchedulerService {
   }
 
   private async createRecurringTaskInstance(originalTask: Task) {
-    // Create new task instance based on recurrence rule
+    // 根据循环规则创建新任务实例
     const newTask = this.taskRepo.create({
       title: originalTask.title,
       description: originalTask.description,
@@ -177,7 +177,7 @@ export class TasksSchedulerService {
 
   private calculateNextDueDate(recurrenceRule: string): Date {
     const now = new Date();
-    // Simple recurrence rule parsing: daily, weekly, monthly
+    // 简单的循环规则解析：每日、每周、每月
     switch (recurrenceRule) {
       case 'daily':
         return new Date(now.getTime() + 24 * 60 * 60 * 1000);

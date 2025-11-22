@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Notification } from './entities/notification.entity';
 
-@ApiTags('Notifications')
+@ApiTags('通知管理')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('notifications')
@@ -16,7 +16,7 @@ export class NotificationsController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'Get user notifications' })
+  @ApiOperation({ summary: '获取用户通知列表' })
   async findAll(@Request() req: any) {
     return this.notificationRepo.find({
       where: { userId: req.user.id },
@@ -27,7 +27,7 @@ export class NotificationsController {
   }
 
   @Get('unread')
-  @ApiOperation({ summary: 'Get unread notifications count' })
+  @ApiOperation({ summary: '获取未读通知数量' })
   async getUnreadCount(@Request() req: any) {
     const count = await this.notificationRepo.count({
       where: {
@@ -39,7 +39,7 @@ export class NotificationsController {
   }
 
   @Patch(':id/read')
-  @ApiOperation({ summary: 'Mark notification as read' })
+  @ApiOperation({ summary: '标记通知为已读' })
   async markAsRead(@Param('id') id: string, @Request() req: any) {
     const notification = await this.notificationRepo.findOne({
       where: { id, userId: req.user.id },
@@ -50,14 +50,14 @@ export class NotificationsController {
       await this.notificationRepo.save(notification);
     }
 
-    return { message: 'Notification marked as read' };
+    return { message: '通知已标记为已读' };
   }
 
   @Patch('read-all')
-  @ApiOperation({ summary: 'Mark all notifications as read' })
+  @ApiOperation({ summary: '标记所有通知为已读' })
   async markAllAsRead(@Request() req: any) {
     await this.notificationRepo.update({ userId: req.user.id, isRead: false }, { isRead: true });
 
-    return { message: 'All notifications marked as read' };
+    return { message: '所有通知已标记为已读' };
   }
 }

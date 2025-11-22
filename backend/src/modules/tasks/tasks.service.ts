@@ -46,7 +46,7 @@ export class TasksService {
     const savedTask = await this.taskRepo.save(task);
     await this.logHistory(savedTask.id, user, 'Created task');
 
-    // If this is a subtask, log to parent task history
+    // 如果是子任务，记录到父任务历史
     if (savedTask.parentId) {
       const parentTask = await this.taskRepo.findOne({
         where: { id: savedTask.parentId },
@@ -65,7 +65,7 @@ export class TasksService {
   }
 
   async findAll(user: User, query: QueryTaskDto) {
-    // Get all team IDs where user is a member or creator
+    // 获取用户作为成员或创建者的所有团队ID
     const userTeams = await this.teamRepo
       .createQueryBuilder('team')
       .leftJoin('team.members', 'member')
@@ -90,28 +90,28 @@ export class TasksService {
         teamIds.length > 0 ? { userId: user.id, teamIds } : { userId: user.id }
       );
 
-    // Filter by creator
+    // 按创建者筛选
     if (query.creatorId) qb.andWhere('task.creatorId = :cid', { cid: query.creatorId });
 
-    // Filter by assignee
+    // 按执行者筛选
     if (query.assigneeId) qb.andWhere('assignee.id = :aid', { aid: query.assigneeId });
 
-    // Filter by team(s)
+    // 按团队筛选
     if (query.teamId) {
       qb.andWhere('taskTeam.id = :tid', { tid: query.teamId });
     }
 
-    // Filter by creation date range
+    // 按创建日期范围筛选
     if (query.createdAfter)
       qb.andWhere('task.createdAt >= :createdAfter', { createdAfter: query.createdAfter });
     if (query.createdBefore)
       qb.andWhere('task.createdAt <= :createdBefore', { createdBefore: query.createdBefore });
 
-    // Filter by due date range
+    // 按截止日期范围筛选
     if (query.dueAfter) qb.andWhere('task.dueDate >= :dueAfter', { dueAfter: query.dueAfter });
     if (query.dueBefore) qb.andWhere('task.dueDate <= :dueBefore', { dueBefore: query.dueBefore });
 
-    // Apply sorting
+    // 应用排序
     const sortBy = query.sortBy || 'createdAt';
     const sortOrder = query.sortOrder || 'DESC';
 
@@ -137,12 +137,12 @@ export class TasksService {
 
       if (!task) throw new NotFoundException();
 
-      // Track old values for logging
+      // 记录旧值用于日志
       const oldTitle = task.title;
       const oldDescription = task.description;
       const oldStatus = task.status;
 
-      // Log title change
+      // 记录标题变更
       if (updateDto.title !== undefined && updateDto.title !== oldTitle) {
         await this.logHistory(
           id,
@@ -152,7 +152,7 @@ export class TasksService {
         );
       }
 
-      // Log description change
+      // 记录描述变更
       if (updateDto.description !== undefined && updateDto.description !== oldDescription) {
         const oldDesc = oldDescription || '(empty)';
         const newDesc = updateDto.description || '(empty)';
@@ -164,7 +164,7 @@ export class TasksService {
         );
       }
 
-      // Log status change
+      // 记录状态变更
       if (updateDto.status !== undefined && updateDto.status !== oldStatus) {
         await this.logHistory(
           id,
@@ -177,7 +177,7 @@ export class TasksService {
       Object.assign(task, updateDto);
       await queryRunner.manager.save(task);
 
-      // Update parent task status based on subtask status changes
+      // 根据子任务状态更新父任务状态
       if (
         task.parentId &&
         updateDto.status !== undefined &&
@@ -204,26 +204,26 @@ export class TasksService {
 
     if (!parent || !parent.subtasks || parent.subtasks.length === 0) return;
 
-    // Check if all subtasks are completed (DONE)
+    // 检查所有子任务是否已完成
     const allDone = parent.subtasks.every((t: Task) => t.status === TaskStatus.DONE);
 
     if (allDone) {
-      // All subtasks are done, complete the parent task
+      // 所有子任务已完成，完成父任务
       if (parent.status !== TaskStatus.DONE) {
         parent.status = TaskStatus.DONE;
         await manager.save(parent);
-        // Recursively update grandparent if exists
+        // 如果存在祖父任务则递归更新
         if (parent.parentId) {
           await this.updateParentBasedOnSubtasks(parent.parentId, manager);
         }
       }
     } else {
-      // At least one subtask is not done, parent should not be DONE
+      // 至少有一个子任务未完成，父任务不应为已完成状态
       if (parent.status === TaskStatus.DONE) {
-        // Revert parent to TODO if it was DONE
+        // 如果父任务是已完成状态则恢复为待办
         parent.status = TaskStatus.TODO;
         await manager.save(parent);
-        // Recursively update grandparent if exists
+        // 如果存在祖父任务则递归更新
         if (parent.parentId) {
           await this.updateParentBasedOnSubtasks(parent.parentId, manager);
         }
@@ -262,12 +262,12 @@ export class TasksService {
 
       if (!task) throw new NotFoundException('Task not found');
 
-      // Only creator can delete task
+      // 只有创建者可以删除任务
       if (task.creatorId !== user.id) {
         throw new NotFoundException('Only creator can delete task');
       }
 
-      // Recursively delete all subtasks first, logging to parent history
+      // 递归删除所有子任务，记录到父任务历史
       await this.deleteSubtasksRecursively(id, queryRunner.manager, task, user);
 
       // Delete the parent task
@@ -294,9 +294,9 @@ export class TasksService {
       where: { parentId },
     });
 
-    // Recursively delete each subtask and its children
+    // 递归删除每个子任务及其子级
     for (const subtask of subtasks) {
-      // Log to main parent task history before deletion (always log to the top-level parent)
+      // 删除前记录到主父任务历史（始终记录到顶级父任务）
       if (mainParentTask && user) {
         const logRepo = manager.getRepository(TaskLog);
         await logRepo.save({
@@ -307,9 +307,9 @@ export class TasksService {
         });
       }
 
-      // First delete all nested subtasks of this subtask (pass same mainParentTask)
+      // 首先删除此子任务的所有嵌套子任务（传递相同的主父任务）
       await this.deleteSubtasksRecursively(subtask.id, manager, mainParentTask, user);
-      // Then delete the subtask itself
+      // 然后删除子任务本身
       await manager.remove(Task, subtask);
     }
   }
